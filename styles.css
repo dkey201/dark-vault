@@ -176,3 +176,36 @@ button.back-button {
 button.back-button:hover {
     background-color: #555;
 }
+
+#unlock-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#question-container {
+    margin-bottom: 1em;
+    color: #00ff00;
+}
+
+#answer-input {
+    padding: 0.5em;
+    border: none;
+    border-radius: 5px;
+    background-color: #222;
+    color: #00ff00;
+    margin-bottom: 1em;
+}
+
+#unlock-form button {
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 5px;
+    background-color: #00ff00;
+    color: #0d0d0d;
+    cursor: pointer;
+}
+
+#unlock-form button:hover {
+    background-color: #00cc00;
+}

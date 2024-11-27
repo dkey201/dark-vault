@@ -10,6 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const messagesContainer = document.getElementById('messages-container');
     const messageForm = document.getElementById('message-form');
     const messageInput = document.getElementById('message-input');
+    const lockScreen = document.getElementById('lock-screen');
+    const unlockForm = document.getElementById('unlock-form');
+    const questionContainer = document.getElementById('question-container');
+    const answerInput = document.getElementById('answer-input');
 
     const contracts = [
         { title: 'Eliminate the Target', description: 'Location: Unknown. Target: John Doe.' },
@@ -32,7 +36,37 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     };
 
+    const questions = [
+        { question: 'What is the code name for our latest mission?', answer: 'Operation Nightfall' },
+        { question: 'Who is the target for the elimination contract?', answer: 'John Doe' },
+        { question: 'Where is the package located?', answer: 'Warehouse 13' }
+    ];
+
     let currentThread = 'Agent X';
+    let currentQuestionIndex = 0;
+
+    function displayQuestion() {
+        questionContainer.textContent = questions[currentQuestionIndex].question;
+    }
+
+    unlockForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const userAnswer = answerInput.value.trim();
+        if (userAnswer === questions[currentQuestionIndex].answer) {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                displayQuestion();
+                answerInput.value = '';
+            } else {
+                lockScreen.classList.add('hidden');
+                homeScreen.classList.remove('hidden');
+            }
+        } else {
+            alert('Incorrect answer. Try again.');
+        }
+    });
+
+    displayQuestion();
 
     contractsIcon.addEventListener('click', () => {
         homeScreen.classList.add('hidden');
