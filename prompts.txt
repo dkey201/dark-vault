@@ -1,1 +1,8 @@
 Hello ! I want to build a joke webpage for a friend's treasure hunt. I want only static javascript + html + javascript code. It must be themed like a secret spy/mercenary website, like everything is confidential highly secret john wick/hitman stuff. It has a "contracts" menu that shows a list of fake mission contracts,, and it has a messaging menu that brings up conversations in a whatsapp style (behind the scene it should be a json so that I can edit it easily). Can you give me the javascript+html+css code please?
+
+
+@ awesome ! Can you improve on this design slightly by having the "contracts" and "messaging" look like application on a virtual phone instead of top menues?
+please add so that it behaves like a phone: the menues are separate icons on the screen, they disappear when you click on it, replaced with the app screen, and you have a "back" icon to get back to the home screen. Add some green or red as well, keep it classy an hackery, but a little less dull gray. Thanks !
+
+awesome! I'd love to see the conversations in messaging be singled out by sender, and have a form for me also to respond, with some messages by me in each thread
+

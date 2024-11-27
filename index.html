@@ -7,25 +7,37 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Confidential Contracts</h1>
-        <nav>
-            <ul>
-                <li><a href="#" id="contracts-menu">Contracts</a></li>
-                <li><a href="#" id="messaging-menu">Messaging</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section id="contracts-section" class="hidden">
-            <h2>Mission Contracts</h2>
-            <ul id="contracts-list"></ul>
-        </section>
-        <section id="messaging-section" class="hidden">
-            <h2>Messages</h2>
-            <div id="messages-container"></div>
-        </section>
-    </main>
+    <div class="phone">
+        <header>
+            <h1>Spy Phone</h1>
+        </header>
+        <main>
+            <section id="home-screen">
+                <div class="app-icon" id="contracts-icon">
+                    <img src="contracts-icon.png" alt="Contracts">
+                    <p>Contracts</p>
+                </div>
+                <div class="app-icon" id="messaging-icon">
+                    <img src="messaging-icon.png" alt="Messaging">
+                    <p>Messaging</p>
+                </div>
+            </section>
+            <section id="contracts-section" class="hidden">
+                <button id="back-button">Back</button>
+                <h2>Mission Contracts</h2>
+                <ul id="contracts-list"></ul>
+            </section>
+            <section id="messaging-section" class="hidden">
+                <button id="back-button">Back</button>
+                <h2>Messages</h2>
+                <div id="messages-container"></div>
+                <form id="message-form">
+                    <input type="text" id="message-input" placeholder="Type your message...">
+                    <button type="submit">Send</button>
+                </form>
+            </section>
+        </main>
+    </div>
     <script src="scripts.js"></script>
 </body>
 </html>
