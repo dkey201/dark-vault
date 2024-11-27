@@ -37,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const questions = [
-        { question: 'What is the code name for our latest mission?', answer: 'Operation Nightfall' },
         { question: 'Who is the target for the elimination contract?', answer: 'John Doe' },
         { question: 'Where is the package located?', answer: 'Warehouse 13' }
     ];
