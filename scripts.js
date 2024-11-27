@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     const contractsIcon = document.getElementById('contracts-icon');
     const messagingIcon = document.getElementById('messaging-icon');
-    const backButtons = document.querySelectorAll('#back-button');
+    const backButtons = document.querySelectorAll('.back-button');
     const homeScreen = document.getElementById('home-screen');
     const contractsSection = document.getElementById('contracts-section');
     const messagingSection = document.getElementById('messaging-section');
     const contractsList = document.getElementById('contracts-list');
+    const tabsContainer = document.getElementById('tabs-container');
     const messagesContainer = document.getElementById('messages-container');
     const messageForm = document.getElementById('message-form');
     const messageInput = document.getElementById('message-input');
@@ -16,12 +17,22 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: 'Protect the VIP', description: 'Location: City Hall. VIP: Mr. Smith.' }
     ];
 
-    const messages = [
-        { sender: 'Agent X', text: 'The target is on the move.' },
-        { sender: 'HQ', text: 'Proceed with caution.' },
-        { sender: 'Agent X', text: 'Mission accomplished.' },
-        { sender: 'Me', text: 'Roger that.' }
-    ];
+    const messages = {
+        'Agent X': [
+            { sender: 'Agent X', text: 'The target is on the move.' },
+            { sender: 'Me', text: 'Roger that.' }
+        ],
+        'HQ': [
+            { sender: 'HQ', text: 'Proceed with caution.' },
+            { sender: 'Me', text: 'Understood.' }
+        ],
+        'Agent Y': [
+            { sender: 'Agent Y', text: 'Mission accomplished.' },
+            { sender: 'Me', text: 'Good job.' }
+        ]
+    };
+
+    let currentThread = 'Agent X';
 
     contractsIcon.addEventListener('click', () => {
         homeScreen.classList.add('hidden');
@@ -32,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     messagingIcon.addEventListener('click', () => {
         homeScreen.classList.add('hidden');
         messagingSection.classList.remove('hidden');
+        displayTabs();
         displayMessages();
     });
 
@@ -47,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const newMessage = messageInput.value.trim();
         if (newMessage) {
-            messages.push({ sender: 'Me', text: newMessage });
+            messages[currentThread].push({ sender: 'Me', text: newMessage });
             displayMessages();
             messageInput.value = '';
         }
@@ -62,9 +74,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function displayTabs() {
+        tabsContainer.innerHTML = '';
+        Object.keys(messages).forEach(sender => {
+            const tab = document.createElement('div');
+            tab.classList.add('tab');
+            if (sender === currentThread) {
+                tab.classList.add('active');
+            }
+            tab.textContent = sender;
+            tab.addEventListener('click', () => {
+                currentThread = sender;
+                displayTabs();
+                displayMessages();
+            });
+            tabsContainer.appendChild(tab);
+        });
+    }
+
     function displayMessages() {
         messagesContainer.innerHTML = '';
-        messages.forEach(message => {
+        messages[currentThread].forEach(message => {
             const div = document.createElement('div');
             div.classList.add('message');
             if (message.sender === 'Me') {

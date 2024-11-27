@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secret Spy Contracts</title>
+    <title>Ze super darkweb</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="phone">
         <header>
-            <h1>Spy Phone</h1>
+            <h1>Crime.inc</h1>
         </header>
         <main>
             <section id="home-screen">
@@ -23,13 +23,12 @@
                 </div>
             </section>
             <section id="contracts-section" class="hidden">
-                <button id="back-button">Back</button>
                 <h2>Mission Contracts</h2>
                 <ul id="contracts-list"></ul>
             </section>
             <section id="messaging-section" class="hidden">
-                <button id="back-button">Back</button>
                 <h2>Messages</h2>
+                <div id="tabs-container"></div>
                 <div id="messages-container"></div>
                 <form id="message-form">
                     <input type="text" id="message-input" placeholder="Type your message...">
@@ -37,6 +36,9 @@
                 </form>
             </section>
         </main>
+        <footer>
+            <button class="back-button">Back</button>
+        </footer>
     </div>
     <script src="scripts.js"></script>
 </body>
