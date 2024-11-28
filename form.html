@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Builder</title>
+    <style>
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        input#generatedURL {
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h1>URL Builder</h1>
+    <form id="urlBuilderForm">
+        <label for="messages">Messages (JSON):</label><br>
+        <textarea id="messages" rows="10">{
+    "Agent X": [
+        { "sender": "Agent X", "text": "The mission is on." },
+        { "sender": "Me", "text": "Understood." }
+    ],
+    "Agent Y": [
+        { "sender": "Agent Y", "text": "Mission accomplished." },
+        { "sender": "Me", "text": "Good job." }
+    ]
+}</textarea><br><br>
+
+        <label for="contracts">Contracts (JSON):</label><br>
+        <textarea id="contracts" rows="10">[
+    { "title": "Eliminate the Target", "description": "Location: Unknown. Target: John Doe." },
+    { "title": "Retrieve the Package", "description": "Location: Warehouse 13. Package: Confidential." },
+    { "title": "Protect the VIP", "description": "Location: City Hall. VIP: Mr. Smith." }
+]</textarea><br><br>
+
+        <label for="questions">Questions (JSON):</label><br>
+        <textarea id="questions" rows="10">[
+    { "question": "Who is the target for the elimination contract?", "answer": "John Doe" },
+    { "question": "Where is the package located?", "answer": "Warehouse 13" }
+]</textarea><br><br>
+
+        <button type="button" onclick="generateURL()">Generate URL</button>
+    </form>
+    <br>
+    <label for="generatedURL">Generated URL:</label><br>
+    <input type="text" id="generatedURL" readonly>
+
+    <script>
+        function encodeBase64(data) {
+            return btoa(unescape(encodeURIComponent(data)));
+        }
+
+        function validateAndFormatJSON(jsonString) {
+            try {
+                const jsonObject = JSON.parse(jsonString);
+                return JSON.stringify(jsonObject, null, 2);
+            } catch (e) {
+                alert("Invalid JSON format: " + e.message);
+                throw new Error("Invalid JSON format");
+            }
+        }
+
+        function generateURL() {
+            try {
+                const messages = validateAndFormatJSON(document.getElementById('messages').value);
+                const contracts = validateAndFormatJSON(document.getElementById('contracts').value);
+                const questions = validateAndFormatJSON(document.getElementById('questions').value);
+
+                const encodedMessages = encodeBase64(messages);
+                const encodedContracts = encodeBase64(contracts);
+                const encodedQuestions = encodeBase64(questions);
+
+                const protocol = window.location.protocol;
+                const hostname = window.location.hostname;
+                const port = window.location.port ? `:${window.location.port}` : '';
+                const url = `${protocol}//${hostname}${port}/index.html?messages=${encodedMessages}&contracts=${encodedContracts}&questions=${encodedQuestions}`;
+                document.getElementById('generatedURL').value = url;
+            } catch (e) {
+                // Handle error if JSON validation fails
+            }
+        }
+    </script>
+</body>
+</html>

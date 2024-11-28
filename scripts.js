@@ -15,13 +15,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const questionContainer = document.getElementById('question-container');
     const answerInput = document.getElementById('answer-input');
 
-    const contracts = [
-        { title: 'Eliminate the Target', description: 'Location: Unknown. Target: John Doe.' },
-        { title: 'Retrieve the Package', description: 'Location: Warehouse 13. Package: Confidential.' },
-        { title: 'Protect the VIP', description: 'Location: City Hall. VIP: Mr. Smith.' }
-    ];
+    // Function to get URL parameters
+    function getUrlParameter(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
 
-    const messages = {
+    // Function to decode base64
+    function decodeBase64(encodedStr) {
+        return JSON.parse(atob(encodedStr));
+    }
+
+    // Default values
+    let messages = {
         'Agent X': [
             { sender: 'Agent X', text: 'The target is on the move.' },
             { sender: 'Me', text: 'Roger that.' }
@@ -36,12 +42,34 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     };
 
-    const questions = [
+    let contracts = [
+        { title: 'Eliminate the Target', description: 'Location: Unknown. Target: John Doe.' },
+        { title: 'Retrieve the Package', description: 'Location: Warehouse 13. Package: Confidential.' },
+        { title: 'Protect the VIP', description: 'Location: City Hall. VIP: Mr. Smith.' }
+    ];
+
+    let questions = [
         { question: 'Who is the target for the elimination contract?', answer: 'John Doe' },
         { question: 'Where is the package located?', answer: 'Warehouse 13' }
     ];
 
-    let currentThread = 'Agent X';
+    // Override variables from URL parameters if present
+    const messagesParam = getUrlParameter('messages');
+    if (messagesParam) {
+        messages = decodeBase64(messagesParam);
+    }
+
+    const contractsParam = getUrlParameter('contracts');
+    if (contractsParam) {
+        contracts = decodeBase64(contractsParam);
+    }
+
+    const questionsParam = getUrlParameter('questions');
+    if (questionsParam) {
+        questions = decodeBase64(questionsParam);
+    }
+
+    let currentThread = Object.keys(messages)[0];
     let currentQuestionIndex = 0;
 
     function displayQuestion() {
