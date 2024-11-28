@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const homeScreen = document.getElementById('home-screen');
     const contractsSection = document.getElementById('contracts-section');
     const messagingSection = document.getElementById('messaging-section');
-    const contractsList = document.getElementById('contracts-list');
+    const contractsContainer = document.getElementById('contracts-container');
     const tabsContainer = document.getElementById('tabs-container');
     const messagesContainer = document.getElementById('messages-container');
     const messageForm = document.getElementById('message-form');
@@ -50,8 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     let questions = [
-        { question: 'Who is the target for the elimination contract?', answer: 'John Doe' },
-        { question: 'Where is the package located?', answer: 'Warehouse 13' }
+        { question: 'Who is the target for the elimination contract?', answer: 'John Doe' }
     ];
 
     // Override variables from URL parameters if present
@@ -128,11 +127,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function displayContracts() {
-        contractsList.innerHTML = '';
+        contractsContainer.innerHTML = '';
         contracts.forEach(contract => {
-            const li = document.createElement('li');
-            li.innerHTML = `<strong>${contract.title}</strong><p>${contract.description}</p>`;
-            contractsList.appendChild(li);
+            const contractElement = document.createElement('div');
+            contractElement.classList.add('contract');
+            contractElement.innerHTML = `<strong>${contract.title}</strong><p>${contract.description}</p>`;
+            contractsContainer.appendChild(contractElement);
         });
     }
 
