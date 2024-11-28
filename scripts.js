@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const unlockForm = document.getElementById('unlock-form');
     const questionContainer = document.getElementById('question-container');
     const answerInput = document.getElementById('answer-input');
+    const usernameFooter = document.getElementById('username-footer');
 
     // Function to get URL parameters
     function getUrlParameter(name) {
@@ -165,4 +166,16 @@ document.addEventListener('DOMContentLoaded', () => {
             messagesContainer.appendChild(div);
         });
     }
+
+    // Set default username
+    let username = 'hacker';
+
+    // Override username from URL parameter if present
+    const usernameParam = getUrlParameter('username');
+    if (usernameParam) {
+        username = usernameParam;
+    }
+
+    // Update the username footer text
+    usernameFooter.textContent = `vault-id: ${username}`;
 });

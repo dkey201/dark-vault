@@ -209,3 +209,10 @@ button.back-button:hover {
 #unlock-form button:hover {
     background-color: #00cc00;
 }
+
+#username-footer {
+    background-color: #333;
+    padding: 1em;
+    text-align: center;
+    color: #00ff00;
+}

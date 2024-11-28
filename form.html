@@ -43,6 +43,9 @@
     { "question": "Where is the package located?", "answer": "Warehouse 13" }
 ]</textarea><br><br>
 
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" placeholder="hacker"><br><br>
+
         <button type="button" onclick="generateURL()">Generate URL</button>
     </form>
     <br>
@@ -69,6 +72,7 @@
                 const messages = validateAndFormatJSON(document.getElementById('messages').value);
                 const contracts = validateAndFormatJSON(document.getElementById('contracts').value);
                 const questions = validateAndFormatJSON(document.getElementById('questions').value);
+                const username = document.getElementById('username').value || 'hacker';
 
                 const encodedMessages = encodeBase64(messages);
                 const encodedContracts = encodeBase64(contracts);
@@ -77,12 +81,17 @@
                 const protocol = window.location.protocol;
                 const hostname = window.location.hostname;
                 const port = window.location.port ? `:${window.location.port}` : '';
-                const url = `${protocol}//${hostname}${port}/index.html?messages=${encodedMessages}&contracts=${encodedContracts}&questions=${encodedQuestions}`;
+                const url = `${protocol}//${hostname}${port}/index.html?messages=${encodedMessages}&contracts=${encodedContracts}&questions=${encodedQuestions}&username=${username}`;
                 document.getElementById('generatedURL').value = url;
             } catch (e) {
                 // Handle error if JSON validation fails
             }
         }
+
+        document.getElementById('urlBuilderForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            generateURL();
+        });
     </script>
 </body>
 </html>
