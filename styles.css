@@ -8,17 +8,19 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: hidden; /* Prevent scrolling */
 }
 
 .phone {
     width: 360px;
-    height: 100%;
+    height: 640px;
     background-color: #1a1a1a;
     border-radius: 20px;
     box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    border: 2px solid #00ff00; /* Add border for a more defined look */
 }
 
 header {
@@ -26,12 +28,14 @@ header {
     padding: 1em;
     text-align: center;
     flex-shrink: 0; /* Prevent header from shrinking */
+    border-bottom: 2px solid #00ff00; /* Add border for separation */
 }
 
 header h1 {
     margin: 0;
     font-size: 1.5em;
     color: #00ff00;
+    text-shadow: 0 0 5px #00ff00; /* Add glow effect */
 }
 
 main {
@@ -54,6 +58,8 @@ section {
     overflow-y: auto; /* Allow vertical scrolling within sections */
     overflow-x: hidden; /* Prevent horizontal scrolling within sections */
     padding: 1em;
+    background: rgba(0, 0, 0, 0.8); /* Add semi-transparent background */
+    backdrop-filter: blur(5px); /* Add blur effect */
 }
 
 .hidden {
@@ -66,6 +72,7 @@ footer {
     text-align: center;
     color: #00ff00;
     flex-shrink: 0; /* Prevent footer from shrinking */
+    border-top: 2px solid #00ff00; /* Add border for separation */
 }
 
 .app-icon {
@@ -79,7 +86,8 @@ footer {
     justify-content: center;
     margin: 1em;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.3s; /* Add transform transition */
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5); /* Add glow effect */
 }
 
 .app-icon img {
@@ -94,6 +102,7 @@ footer {
 
 .app-icon:hover {
     background-color: #555;
+    transform: scale(1.1); /* Add scale effect on hover */
 }
 
 #contracts-container {
@@ -105,6 +114,7 @@ footer {
     overflow-y: auto;
     overflow-x: hidden; /* Prevent horizontal scrolling */
     color: #00ff00;
+    box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.5); /* Add inner glow effect */
 }
 
 .contract {
@@ -112,6 +122,7 @@ footer {
     margin: 0.5em 0;
     padding: 1em;
     border-radius: 5px;
+    border: 1px solid #00ff00; /* Add border for separation */
 }
 
 #tabs-container {
@@ -126,10 +137,13 @@ footer {
     border-radius: 5px;
     cursor: pointer;
     color: #00ff00;
+    transition: background-color 0.3s, transform 0.3s; /* Add transform transition */
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5); /* Add glow effect */
 }
 
 .tab.active {
     background-color: #555;
+    transform: scale(1.1); /* Add scale effect for active tab */
 }
 
 #messages-container {
@@ -141,6 +155,7 @@ footer {
     overflow-y: auto;
     overflow-x: hidden; /* Prevent horizontal scrolling */
     color: #00ff00;
+    box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.5); /* Add inner glow effect */
 }
 
 .message {
@@ -148,6 +163,7 @@ footer {
     margin: 0.5em 0;
     padding: 1em;
     border-radius: 5px;
+    border: 1px solid #00ff00; /* Add border for separation */
 }
 
 .message.sender {
@@ -169,6 +185,7 @@ form#message-form input {
     margin-right: 0.5em;
     background-color: #222;
     color: #00ff00;
+    box-shadow: inset 0 0 5px rgba(0, 255, 0, 0.5); /* Add inner glow effect */
 }
 
 form#message-form button {
@@ -178,10 +195,12 @@ form#message-form button {
     background-color: #00ff00;
     color: #0d0d0d;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s; /* Add transform transition */
 }
 
 form#message-form button:hover {
     background-color: #00cc00;
+    transform: scale(1.1); /* Add scale effect on hover */
 }
 
 button.back-button {
@@ -191,10 +210,12 @@ button.back-button {
     padding: 0.5em 1em;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s; /* Add transform transition */
 }
 
 button.back-button:hover {
     background-color: #555;
+    transform: scale(1.1); /* Add scale effect on hover */
 }
 
 #unlock-form {
@@ -206,6 +227,7 @@ button.back-button:hover {
 #question-container {
     margin-bottom: 1em;
     color: #00ff00;
+    text-shadow: 0 0 5px #00ff00; /* Add glow effect */
 }
 
 #answer-input {
@@ -215,6 +237,7 @@ button.back-button:hover {
     background-color: #222;
     color: #00ff00;
     margin-bottom: 1em;
+    box-shadow: inset 0 0 5px rgba(0, 255, 0, 0.5); /* Add inner glow effect */
 }
 
 #unlock-form button {
@@ -224,10 +247,12 @@ button.back-button:hover {
     background-color: #00ff00;
     color: #0d0d0d;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s; /* Add transform transition */
 }
 
 #unlock-form button:hover {
     background-color: #00cc00;
+    transform: scale(1.1); /* Add scale effect on hover */
 }
 
 #username-footer {
@@ -236,6 +261,7 @@ button.back-button:hover {
     text-align: center;
     color: #00ff00;
     flex-shrink: 0; /* Prevent footer from shrinking */
+    border-top: 2px solid #00ff00; /* Add border for separation */
 }
 
 /* Scrollbar styles for WebKit browsers (Chrome, Safari) */
