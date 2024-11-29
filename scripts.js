@@ -27,6 +27,50 @@ document.addEventListener('DOMContentLoaded', () => {
         return JSON.parse(atob(encodedStr));
     }
 
+    // Function to sanitize input
+    function sanitizeInput(input) {
+        return input.replace(/[&<>"']/g, function(match) {
+            const escape = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            };
+            return escape[match];
+        });
+    }
+
+    // Function to validate messages structure
+    function validateMessages(data) {
+        if (typeof data !== 'object' || data === null) return false;
+        for (const key in data) {
+            if (!Array.isArray(data[key])) return false;
+            for (const message of data[key]) {
+                if (typeof message.sender !== 'string' || typeof message.text !== 'string') return false;
+            }
+        }
+        return true;
+    }
+
+    // Function to validate contracts structure
+    function validateContracts(data) {
+        if (!Array.isArray(data)) return false;
+        for (const contract of data) {
+            if (typeof contract.title !== 'string' || typeof contract.description !== 'string') return false;
+        }
+        return true;
+    }
+
+    // Function to validate questions structure
+    function validateQuestions(data) {
+        if (!Array.isArray(data)) return false;
+        for (const question of data) {
+            if (typeof question.question !== 'string' || typeof question.answer !== 'string') return false;
+        }
+        return true;
+    }
+
     // Default values
     let messages = {
         'Agent X': [
@@ -56,17 +100,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Override variables from URL parameters if present
     const messagesParam = getUrlParameter('messages');
     if (messagesParam) {
-        messages = decodeBase64(messagesParam);
+        const decodedMessages = decodeBase64(messagesParam);
+        if (validateMessages(decodedMessages)) {
+            messages = decodedMessages;
+        }
     }
 
     const contractsParam = getUrlParameter('contracts');
     if (contractsParam) {
-        contracts = decodeBase64(contractsParam);
+        const decodedContracts = decodeBase64(contractsParam);
+        if (validateContracts(decodedContracts)) {
+            contracts = decodedContracts;
+        }
     }
 
     const questionsParam = getUrlParameter('questions');
     if (questionsParam) {
-        questions = decodeBase64(questionsParam);
+        const decodedQuestions = decodeBase64(questionsParam);
+        if (validateQuestions(decodedQuestions)) {
+            questions = decodedQuestions;
+        }
     }
 
     let currentThread = Object.keys(messages)[0];
@@ -173,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Override username from URL parameter if present
     const usernameParam = getUrlParameter('username');
     if (usernameParam) {
-        username = usernameParam;
+        username = sanitizeInput(usernameParam);
     }
 
     // Update the username footer text

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customize</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .editor {
+            height: 200px;
+            width: 100%;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+        input#generatedURL {
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .response-section {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+        }
+        .info {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Customizer</h1>
+        <p>Customize the contents of this website with an URL</p>
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" placeholder="hacker"><br><br>
+
+        <label for="questions">Locking Questions (JSON):</label><br>
+        <div id="questions" class="editor">[
+{ "question": "Who is the target for the elimination contract?", "answer": "John Doe" }
+]</div><br><br>
+
+        <form id="urlBuilderForm">
+            <label for="messages">Messages (JSON):</label><br>
+            <div id="messages" class="editor">{
+    "Agent X": [
+        { "sender": "Agent X", "text": "The mission is on." },
+        { "sender": "Me", "text": "Understood." }
+    ],
+    "Agent Y": [
+        { "sender": "Agent Y", "text": "Mission accomplished." },
+        { "sender": "Me", "text": "Good job." }
+    ]
+}</div><br><br>
+
+            <label for="contracts">Contracts (JSON):</label><br>
+            <div id="contracts" class="editor">[
+    { "title": "Eliminate the Target", "description": "Location: Unknown. Target: John Doe." },
+    { "title": "Retrieve the Package", "description": "Location: Warehouse 13. Package: Confidential." },
+    { "title": "Protect the VIP", "description": "Location: City Hall. VIP: Mr. Smith." }
+]</div><br><br>
+
+
+            <button type="button" onclick="generateURL()">Generate URL</button>
+        </form>
+        <div class="response-section">
+            <label for="generatedURL">Generated URL:</label><br>
+            <input type="text" id="generatedURL" readonly>
+        </div>
+        <div class="info">
+            <p>To get a shorter URL, you can use a service like <a href="https://tinyurl.com/" target="_blank">TinyURL</a>. Simply copy the generated URL and paste it into TinyURL to get a shortened version.</p>
+            <p>To turn the URL into a QR code, you can use a service like <a href="https://www.qr-code-generator.com/" target="_blank">QR Code Generator</a>. Paste the shortened URL into the QR code generator to create a QR code that can be scanned with a mobile device.</p>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+    <script>
+        function initializeEditor(id) {
+            const editor = ace.edit(id);
+            editor.session.setMode("ace/mode/json");
+            editor.setTheme("ace/theme/github");
+            editor.setOptions({
+                maxLines: Infinity,
+                autoScrollEditorIntoView: true
+            });
+            return editor;
+        }
+
+        const messagesEditor = initializeEditor('messages');
+        const contractsEditor = initializeEditor('contracts');
+        const questionsEditor = initializeEditor('questions');
+
+        function encodeBase64(data) {
+            return btoa(unescape(encodeURIComponent(data)));
+        }
+
+        function validateAndFormatJSON(jsonString) {
+            try {
+                const jsonObject = JSON.parse(jsonString);
+                return JSON.stringify(jsonObject, null, 2);
+            } catch (e) {
+                alert("Invalid JSON format: " + e.message);
+                throw new Error("Invalid JSON format");
+            }
+        }
+
+        function generateURL() {
+            try {
+                const messages = validateAndFormatJSON(messagesEditor.getValue());
+                const contracts = validateAndFormatJSON(contractsEditor.getValue());
+                const questions = validateAndFormatJSON(questionsEditor.getValue());
+                const username = document.getElementById('username').value || 'hacker';
+
+                const encodedMessages = encodeBase64(messages);
+                const encodedContracts = encodeBase64(contracts);
+                const encodedQuestions = encodeBase64(questions);
+
+                const currentUrl = window.location.href.split('?')[0]; // Strip any URL parameters
+                const baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/')) + '/index.html'; // Replace current page with index.html
+
+                const url = `${baseUrl}?messages=${encodedMessages}&contracts=${encodedContracts}&questions=${encodedQuestions}&username=${username}`;
+                document.getElementById('generatedURL').value = url;
+            } catch (e) {
+                // Handle error if JSON validation fails
+            }
+        }
+
+        document.getElementById('urlBuilderForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            generateURL();
+        });
+    </script>
+</body>
+</html>

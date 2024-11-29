@@ -237,3 +237,30 @@ button.back-button:hover {
     color: #00ff00;
     flex-shrink: 0; /* Prevent footer from shrinking */
 }
+
+/* Scrollbar styles for WebKit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0d0d0d; /* Dark background */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #00ff00; /* Green thumb */
+    border-radius: 10px;
+    border: 3px solid #0d0d0d; /* Adds padding around thumb */
+}
+
+/* Scrollbar styles for Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #00ff00 #0d0d0d;
+}
+
+/* Ensure the sections and containers use the custom scrollbars */
+section, #contracts-container, #messages-container {
+    scrollbar-width: thin;
+    scrollbar-color: #00ff00 #0d0d0d;
+}
