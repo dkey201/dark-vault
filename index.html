@@ -295,6 +295,13 @@
             min-height: auto; /* Remove fixed height */
             overflow: visible; /* Ensure no overflow */
         }
+
+        #error-message {
+            color: #ff0000;
+            text-shadow: 0 0 5px #ff0000; /* Add glow effect */
+            margin-top: 1em;
+            display: none; /* Initially hidden */
+        }
     </style>
 </head>
 <body>
@@ -308,6 +315,7 @@
                     <div id="question-container"></div>
                     <input type="text" id="answer-input" placeholder="Your answer...">
                     <button type="submit">Unlock</button>
+                    <div id="error-message">Incorrect answer. Try again.</div> <!-- Error message -->
                 </form>
             </section>
             <section id="home-screen" class="hidden">
@@ -357,6 +365,7 @@
             const questionContainer = document.getElementById('question-container');
             const answerInput = document.getElementById('answer-input');
             const usernameFooter = document.getElementById('username-footer');
+            const errorMessage = document.getElementById('error-message');
 
             // Function to get URL parameters
             function getUrlParameter(name) {
@@ -473,18 +482,20 @@
 
             unlockForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const userAnswer = answerInput.value.trim();
-                if (userAnswer === questions[currentQuestionIndex].answer) {
+                const userAnswer = answerInput.value.trim().toLowerCase().replace(/[^a-z]/g, '');
+                const correctAnswer = questions[currentQuestionIndex].answer.toLowerCase().replace(/[^a-z]/g, '');
+                if (userAnswer === correctAnswer) {
                     currentQuestionIndex++;
                     if (currentQuestionIndex < questions.length) {
                         displayQuestion();
                         answerInput.value = '';
+                        errorMessage.style.display = 'none'; // Hide error message
                     } else {
                         lockScreen.classList.add('hidden');
                         homeScreen.classList.remove('hidden');
                     }
                 } else {
-                    alert('Incorrect answer. Try again.');
+                    errorMessage.style.display = 'block'; // Show error message
                 }
             });
 
