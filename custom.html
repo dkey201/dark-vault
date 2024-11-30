@@ -80,28 +80,47 @@
         <form id="urlBuilderForm">
             <label for="messages">Messages (JSON):</label><br>
             <div id="messages" class="editor">{
-    "Agent X": [
-        { "sender": "Agent X", "text": "The mission is on." },
-        { "sender": "Me", "text": "Understood." }
-    ],
-    "Agent Y": [
-        { "sender": "Agent Y", "text": "Mission accomplished." },
-        { "sender": "Me", "text": "Good job." }
+    "Anonymour buyer": [
+        { "sender": "Agent Y", "text": "Le cadeau est accessible. Go. Now." },
+        { "sender": "Me", "text": "omw" }
+    ]
+,
+    "LowEloLegend": [
+        { "sender": "LowEloLegend", "text": "Salut, je suis excité d'apprendre l'ordre de construction pour Age of Empires 2 !" },
+        { "sender": "Me", "text": "Super ! Commençons par les bases. Tout d'abord, vous devez vous concentrer sur la collecte de nourriture. Envoyez vos villageois initiaux aux moutons." },
+        { "sender": "LowEloLegend", "text": "Compris. Combien de villageois dois-je envoyer ?" },
+        { "sender": "Me", "text": "Envoyez tous vos villageois initiaux aux moutons et créez de nouveaux villageois à partir de votre centre-ville." },
+        { "sender": "LowEloLegend", "text": "D'accord, je m'en occupe. Quelle est la prochaine étape ?" },
+        { "sender": "Me", "text": "Une fois que vous avez 6 villageois sur les moutons, envoyez les 4 villageois suivants au bois." },
+        { "sender": "LowEloLegend", "text": "D'accord, 6 sur les moutons et 4 au bois. Quelle est la prochaine étape ?" },
+        { "sender": "Me", "text": "Ensuite, envoyez 1 villageois construire une maison puis un moulin près des baies. Ensuite, envoyez ce villageois récolter des baies." },
+        { "sender": "LowEloLegend", "text": "Compris. Combien de villageois doivent récolter des baies ?" },
+        { "sender": "Me", "text": "Envoyez 4 villageois récolter des baies. Continuez à créer de nouveaux villageois et envoyez-les aux sources de nourriture." },
+        { "sender": "LowEloLegend", "text": "D'accord. Que dois-je faire après avoir récolté des baies ?" },
+        { "sender": "Me", "text": "Une fois que vous avez 4 villageois sur les baies, envoyez les 3 villageois suivants au bois." },
+        { "sender": "LowEloLegend", "text": "D'accord, 3 de plus au bois. Quelle est la prochaine étape ?" },
+        { "sender": "Me", "text": "Maintenant, envoyez 1 villageois construire une maison puis un camp minier près de l'or. Envoyez ce villageois extraire de l'or." },
+        { "sender": "LowEloLegend", "text": "Combien de villageois doivent extraire de l'or ?" },
+        { "sender": "Me", "text": "Envoyez 2 villageois extraire de l'or. Continuez à créer de nouveaux villageois et envoyez-les aux sources de nourriture." },
+        { "sender": "LowEloLegend", "text": "Compris. Quelle est la prochaine étape ?" },
+        { "sender": "Me", "text": "Une fois que vous avez suffisamment de nourriture, passez à l'âge féodal. Continuez à récolter des ressources et construisez une caserne." },
+        { "sender": "LowEloLegend", "text": "D'accord, passer à l'âge féodal et construire une caserne. Quelle est la prochaine étape ?" },
+        { "sender": "Me", "text": "À l'âge féodal, concentrez-vous sur la construction d'une écurie et d'un champ de tir à l'arc. Commencez à former des unités militaires." },
+        { "sender": "LowEloLegend", "text": "Compris. Merci pour les conseils !" },
+        { "sender": "Me", "text": "De rien ! Continuez à pratiquer et vous maîtriserez l'ordre de construction en un rien de temps." }
     ]
 }</div><br><br>
 
             <label for="contracts">Contracts (JSON):</label><br>
             <div id="contracts" class="editor">[
-    { "title": "Eliminate the Target", "description": "Location: Unknown. Target: John Doe." },
-    { "title": "Retrieve the Package", "description": "Location: Warehouse 13. Package: Confidential." },
-    { "title": "Protect the VIP", "description": "Location: City Hall. VIP: Mr. Smith." }
+    { "title": "Package aquisition", "description": "Location: Montreal. Target: Classified. Anonymous Buyer." },
+    { "title": "Climbing the ladder", "description": "Location: Online. Instruction: Reach out to LowEloLegend in pm." }
 ]</div><br><br>
 
             <label for="notes">Notes (JSON):</label><br>
             <div id="notes" class="editor">[
-                { "title": "Meeting Notes", "description": "Discuss the new project requirements." },
-                { "title": "Shopping List", "description": "Buy milk, eggs, and bread." },
-                { "title": "To-Do", "description": "Complete the report by Friday." }
+                { "title": "Mercenary summit, meeting Notes", "description": "This could have been an email" },
+                { "title": "Shopping List", "description": "Gnocci, gnocci, gnocci, gnocci" }
             ]</div><br><br>
 
             <button type="button" onclick="generateURL()">Generate URL</button>
