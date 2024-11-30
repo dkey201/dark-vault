@@ -123,11 +123,13 @@
                 { "title": "Shopping List", "description": "Gnocci, gnocci, gnocci, gnocci" }
             ]</div><br><br>
 
-            <button type="button" onclick="generateURL()">Generate URL</button>
+            <button type="button" onclick="generateURLs()">Generate URL</button>
         </form>
         <div class="response-section">
             <label for="generatedURL">Generated URL:</label><br>
             <input type="text" id="generatedURL" readonly>
+            <label for="prefilledURL">Prefilled URL:</label><br>
+            <input type="text" id="prefilledURL" readonly>
         </div>
         <div class="info">
             <p>To get a shorter URL, you can use a service like <a href="https://tinyurl.com/" target="_blank">TinyURL</a>. Simply copy the generated URL and paste it into TinyURL to get a shortened version.</p>
@@ -171,7 +173,7 @@
             }
         }
 
-        function generateURL() {
+        function generateURLs() {
             try {
                 const messages = validateAndFormatJSON(messagesEditor.getValue());
                 const contracts = validateAndFormatJSON(contractsEditor.getValue());
@@ -187,16 +189,49 @@
                 const currentUrl = window.location.href.split('?')[0]; // Strip any URL parameters
                 const baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/')) + '/index.html'; // Replace current page with index.html
 
-                const url = `${baseUrl}?messages=${encryptedMessages}&contracts=${encryptedContracts}&questions=${encryptedQuestions}&notes=${encryptedNotes}&username=${username}`;
-                document.getElementById('generatedURL').value = url;
+                const generatedUrl = `${baseUrl}?messages=${encryptedMessages}&contracts=${encryptedContracts}&questions=${encryptedQuestions}&notes=${encryptedNotes}&username=${username}`;
+                document.getElementById('generatedURL').value = generatedUrl;
+
+                const prefilledUrl = `${currentUrl}?messages=${encryptedMessages}&contracts=${encryptedContracts}&questions=${encryptedQuestions}&notes=${encryptedNotes}&username=${username}`;
+                document.getElementById('prefilledURL').value = prefilledUrl;
             } catch (e) {
                 // Handle error if JSON validation fails
             }
         }
 
+        function getURLParameter(name) {
+            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+        }
+
+        function prefillForm() {
+            const username = getURLParameter('username');
+            const messages = getURLParameter('messages');
+            const contracts = getURLParameter('contracts');
+            const questions = getURLParameter('questions');
+            const notes = getURLParameter('notes');
+
+            if (username) {
+                document.getElementById('username').value = username;
+            }
+            if (messages) {
+                messagesEditor.setValue(CryptoJS.AES.decrypt(messages, encryptionKey).toString(CryptoJS.enc.Utf8));
+            }
+            if (contracts) {
+                contractsEditor.setValue(CryptoJS.AES.decrypt(contracts, encryptionKey).toString(CryptoJS.enc.Utf8));
+            }
+            if (questions) {
+                questionsEditor.setValue(CryptoJS.AES.decrypt(questions, encryptionKey).toString(CryptoJS.enc.Utf8));
+            }
+            if (notes) {
+                notesEditor.setValue(CryptoJS.AES.decrypt(notes, encryptionKey).toString(CryptoJS.enc.Utf8));
+            }
+        }
+
+        window.onload = prefillForm;
+
         document.getElementById('urlBuilderForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            generateURL();
+            generateURLs();
         });
     </script>
 </body>
