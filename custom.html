@@ -97,6 +97,12 @@
     { "title": "Protect the VIP", "description": "Location: City Hall. VIP: Mr. Smith." }
 ]</div><br><br>
 
+            <label for="notes">Notes (JSON):</label><br>
+            <div id="notes" class="editor">[
+                { "title": "Meeting Notes", "description": "Discuss the new project requirements." },
+                { "title": "Shopping List", "description": "Buy milk, eggs, and bread." },
+                { "title": "To-Do", "description": "Complete the report by Friday." }
+            ]</div><br><br>
 
             <button type="button" onclick="generateURL()">Generate URL</button>
         </form>
@@ -110,6 +116,7 @@
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
     <script>
         function initializeEditor(id) {
             const editor = ace.edit(id);
@@ -125,9 +132,14 @@
         const messagesEditor = initializeEditor('messages');
         const contractsEditor = initializeEditor('contracts');
         const questionsEditor = initializeEditor('questions');
+        const notesEditor = initializeEditor('notes');
 
-        function encodeBase64(data) {
-            return btoa(unescape(encodeURIComponent(data)));
+        const encryptionKey = 'my-hardcoded-key-123-anne11kdvnepLAOOAaaaaaaddpakcgi'; // Hardcoded key for encryption/decryption
+
+        // Function to encrypt data
+        function encryptData(data) {
+            const cipher = CryptoJS.AES.encrypt(data, encryptionKey);
+            return cipher.toString();
         }
 
         function validateAndFormatJSON(jsonString) {
@@ -145,16 +157,18 @@
                 const messages = validateAndFormatJSON(messagesEditor.getValue());
                 const contracts = validateAndFormatJSON(contractsEditor.getValue());
                 const questions = validateAndFormatJSON(questionsEditor.getValue());
+                const notes = validateAndFormatJSON(notesEditor.getValue());
                 const username = document.getElementById('username').value || 'hacker';
 
-                const encodedMessages = encodeBase64(messages);
-                const encodedContracts = encodeBase64(contracts);
-                const encodedQuestions = encodeBase64(questions);
+                const encryptedMessages = encodeURIComponent(encryptData(messages));
+                const encryptedContracts = encodeURIComponent(encryptData(contracts));
+                const encryptedQuestions = encodeURIComponent(encryptData(questions));
+                const encryptedNotes = encodeURIComponent(encryptData(notes));
 
                 const currentUrl = window.location.href.split('?')[0]; // Strip any URL parameters
                 const baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/')) + '/index.html'; // Replace current page with index.html
 
-                const url = `${baseUrl}?messages=${encodedMessages}&contracts=${encodedContracts}&questions=${encodedQuestions}&username=${username}`;
+                const url = `${baseUrl}?messages=${encryptedMessages}&contracts=${encryptedContracts}&questions=${encryptedQuestions}&notes=${encryptedNotes}&username=${username}`;
                 document.getElementById('generatedURL').value = url;
             } catch (e) {
                 // Handle error if JSON validation fails
